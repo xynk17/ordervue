@@ -4,17 +4,17 @@
 			<mt-tab-item id="Home">
 				<img slot="icon" src="../assets/img/tabindexf.png" v-if="this.selected == 'Home' ">
 				<img slot="icon" src="../assets/img/tabindex.png" v-else >
-				首页
+				TOP
 			</mt-tab-item>
 			<mt-tab-item id="Order">
 				<img slot="icon" src="../assets/img/tabddf.png" v-if="this.selected == 'Order' ">
 				<img slot="icon" src="../assets/img/tabdd.png" v-else >
-				开始点餐
+				注文開始
 			</mt-tab-item>
 			<mt-tab-item id="OrderSee">
 				<img slot="icon" src="../assets/img/tabmyf.png" v-if="this.selected == 'OrderSee' ">
 				<img slot="icon" src="../assets/img/tabmy.png" v-else >
-				订单查看
+				注文確認
 			</mt-tab-item>
 		</mt-tabbar>
 	</div>
@@ -35,7 +35,7 @@
 			},
 			names:{
 				type:String
-			} 
+			}
 		},
 // 		props:['selected'],
 		created(){

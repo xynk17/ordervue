@@ -1,7 +1,7 @@
 <template>
   <div class="order">
     <div class="heard">
-      <mt-header title="商品列表">
+      <mt-header title="商品選択">
         <router-link to="/Home" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
@@ -13,17 +13,17 @@
       <div class="tabss">
         <div class="tab-tilte">
           <ul>
-            <li @click="tancXian(0)" :class="{active1:cur==0}">热销</li>
+            <li @click="tancXian(0)" :class="{active1:cur==0}">人気商品</li>
             <li @click="tancXian(index+1)" :class="{active1:cur==index+1}" v-for='(item,index) in foodsList' :key='index'>{{item.type_name}}</li>
           </ul>
         </div>
         <div class="tab-content">
           <li id="anchor0">
-            <p class="productName">热销</p>
+            <p class="productName">人気商品</p>
             <div style="width:100%">
               <tabs
                 :showw="false"
-                names="热销"
+                names="人気商品"
                 :foods="foodsListHot"
                 @drop="drop"
                 @dropj="dropj"
@@ -290,7 +290,7 @@ export default {
 }
 .hot {
   float: right;
-  width: 0.7rem;
+  width: 0.8rem;
   height: 0.3rem;
   line-height: 0.3rem;
   border: 1px solid red;

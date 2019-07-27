@@ -1,7 +1,7 @@
 <template>
   <div class="order_sub">
     <div class="heard">
-      <mt-header title="提交订单">
+      <mt-header title="オプション選択">
         <router-link to="/Order" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
@@ -18,17 +18,17 @@
           <div class="sub_change">
             <div class="sub_box" id="box">
               <el-radio-group v-model="remarks[index].change1" @change="chang(index)">
-                <el-radio-button label="1">冷</el-radio-button>
-                <el-radio-button label="2">热</el-radio-button>
+                <el-radio-button label="1">コールド</el-radio-button>
+                <el-radio-button label="2">ホット</el-radio-button>
               </el-radio-group>
             </div>
             <div class="sub_box">
               <el-checkbox-group v-model="remarks[index].change2" @change="chang(index)">
-                <el-checkbox-button label="珍珠追加">珍珠追加</el-checkbox-button>
+                <el-checkbox-button label="珍珠追加">タピオカ追加</el-checkbox-button>
               </el-checkbox-group>
             </div>
             <div class="sub_box" v-show="show&&glole==index" @change="chang(index)">
-              <span class="sub_change_title">冰块</span>
+              <span class="sub_change_title">氷</span>
               <el-radio-group v-model="remarks[index].change3">
                 <el-radio-button label="1">1</el-radio-button>
                 <el-radio-button label="2">2</el-radio-button>
@@ -38,7 +38,7 @@
               </el-radio-group>
             </div>
             <div class="sub_box" v-show="show&&glole==index" @change="chang(index)">
-              <span class="sub_change_title">糖</span>
+              <span class="sub_change_title">甘さ</span>
               <el-radio-group v-model="remarks[index].change4">
                 <el-radio-button label="1">1</el-radio-button>
                 <el-radio-button label="2">2</el-radio-button>
@@ -51,9 +51,9 @@
         </li>
       </ul>
       <div class="shiji">
-        <span>实际付款</span>
+        <span>決済金額</span>
         <span class="smallHe">
-          小计：
+          合計：
           <span>￥{{total}}</span>
         </span>
       </div>
@@ -62,10 +62,10 @@
       </div>
       <div class="footerBox">
         <span class="totalHe">
-          合计：
+          合計：
           <span>￥{{total}}</span>
         </span>
-        <span class="footerPay" @click="submit">提交订单</span>
+        <span class="footerPay" @click="submit">注文する</span>
       </div>
     </div>
   </div>
@@ -105,10 +105,10 @@
                    break
                 }
              }
-            
+
           }
         }
-      } 
+      }
       console.log(this.foodList,44)
       //根据传过来的foodList的长度，push chang变量的个数
       for (var i = 0; i < this.foodList.length; i++) {
@@ -119,17 +119,17 @@
           change4: ""
         });
         this.str.push({
-          str: 
+          str:
  `
-产品名称：${this.foodList[i].name}；
-冷热：热；
+商品名：${this.foodList[i].name}；
+ホット；
         `,
           index: i
         });
         this.textarea +=
         `
 产品名称：${this.foodList[i].name}；
-冷热：热；
+ホット；
         `;
       }
       this.total = localStorage.getItem('total');
@@ -192,16 +192,16 @@
         this.beizhu =
           this.remarks[index].change1 == "2" ?
         `
-产品名称：${this.foodList[index].name}；
-冷热：热；
-珍珠追加：${this.remarks[index].change2 ? "是" : "否"}；
+商品名：${this.foodList[index].name}；
+ホット；
+タピオカ追加：${this.remarks[index].change2 ? "是" : "否"}；
         `:
         `
-产品名称：${this.foodList[index].name}；
-冷热：冷；
-珍珠追加：${this.remarks[index].change2 ? "是" : "否"}；
-加冰数量：${this.remarks[index].change3}；
-加糖数量：${this.remarks[index].change4}
+商品名：${this.foodList[index].name}；
+アイス；
+タピオカ追加：${this.remarks[index].change2 ? "是" : "否"}；
+氷：${this.remarks[index].change3}；
+甘さ：${this.remarks[index].change4}
         `;
         this.textarea = "";
         for (var i = 0; i < this.str.length; i++) {

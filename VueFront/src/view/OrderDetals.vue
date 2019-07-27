@@ -1,7 +1,7 @@
 <template>
   <div class="order_sub">
     <div class="heard">
-      <mt-header title="订单详情">
+      <mt-header title="注文詳細">
         <router-link to="/OrderSee" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
@@ -26,18 +26,18 @@
         </li>
       </ul>
       <div class='shiji1'>
-        <span style='font-size:0.2rem'>实际付款</span>
-        <span class='smallHe1'>小计：<span>￥{{order.money}}</span></span>
+        <span style='font-size:0.2rem'>決済金額</span>
+        <span class='smallHe1'>合計：<span>￥{{order.money}}</span></span>
       </div>
       <div>
         <div class='shiji1'>
-          <p style='color:#000;font-size: 0.3rem'>订单详情</p>
+          <p style='color:#000;font-size: 0.3rem'>注文詳細</p>
           <p>
-            <span>订单号</span>
+            <span>注文番号</span>
             <span class='orderId'>{{order.order_num}}</span>
           </p>
           <p>
-            <span>下单时间</span>
+            <span>注文時間</span>
             <span class='orderId'>{{order.time}}</span>
           </p>
           <p>

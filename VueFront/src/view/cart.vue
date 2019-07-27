@@ -12,11 +12,11 @@
               <div class="totalCount" v-show="totalCount > 0">{{ totalCount }}</div>
             </div>
           </div>
-          <div class="price" :class="{'priceLight':totalCount > 0}">{{totalCount > 0?'￥'+totalPrice:'购物车为空' }}</div>
+          <div class="price" :class="{'priceLight':totalCount > 0}">{{totalCount > 0?'￥'+totalPrice:'カートに商品なし' }}</div>
         </div>
 
         <div class="right" @click.stop="pay">
-          <div class="pay" :class="{'payLight': this.totalPrice >0}">去结算</div>
+          <div class="pay" :class="{'payLight': this.totalPrice >0}">次へ</div>
         </div>
       </div>
 
@@ -37,10 +37,10 @@
           <div class="list-header">
             <h1 class="title">
               <i class="gun"></i>
-              购物车
+              ショッピングカート
             </h1>
             <span class="empty" @click="empty">
-              <i class="el-icon-delete">&emsp;</i>清空
+              <i class="el-icon-delete">&emsp;</i>クリア
             </span>
           </div>
 
@@ -245,7 +245,7 @@
         console.log(this.totalPrice)
         if (this.totalPrice == '0') {
           // mint UI
-          MessageBox("提示", "请您选择商品");
+          MessageBox("INFO", "お好きな商品を選択してください");
           return;
         }
         this.$router.push({

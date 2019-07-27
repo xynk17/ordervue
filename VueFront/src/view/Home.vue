@@ -14,7 +14,7 @@
 		<div class="business">
 			<div class="title">
 				<img src="../assets/img/seller_info_img.png" alt="">
-				<div>商家详情</div>
+				<div>ようこそ</div>
 			</div>
 			<div class="con">
 				<div class="img">
@@ -23,7 +23,7 @@
 				<div class='orderBox'>
 				<div class="con_til">{{list.name}}</div>
 				<div class="con_left" @click="diancan">
-					开始点餐
+					注文開始
 				</div>
 				</div>
 			</div>

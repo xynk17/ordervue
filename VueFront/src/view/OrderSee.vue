@@ -1,13 +1,13 @@
 <template>
   <div class="ordersee">
     <div class="heard">
-      <mt-header title="订单列表">
+      <mt-header title="注文確認">
       </mt-header>
     </div>
     <div class="order_see_tit">
       <mt-navbar v-model="orderSelected">
-        <mt-tab-item id="1">待发货</mt-tab-item>
-        <mt-tab-item id="2">待收货</mt-tab-item>
+        <mt-tab-item id="1">未支払</mt-tab-item>
+        <mt-tab-item id="2">支払済</mt-tab-item>
       </mt-navbar>
       <div class="swriper">
         <mt-swipe :auto="4000">
@@ -61,9 +61,9 @@
            this.ClickWill()
         }else if(val=='2'){
            this.ClickDone()
-        
+
         }
-       
+
       }
     }
     },

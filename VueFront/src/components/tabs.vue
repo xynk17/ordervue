@@ -8,7 +8,7 @@
         <el-col :span="18">
           <div style="padding: 14px 10px 14px 30px;" class="right-content">
             <span class="title">{{item.name}}</span>
-            <p class="intro">月销{{item.sales}}笔</p>
+            <!--<p class="intro">月销{{item.sales}}笔</p>-->
             <div class="vip">
               <div class="price">
                 <span>￥{{item.money}}</span>
@@ -18,7 +18,7 @@
                       <i class="el-icon-remove-outline fuhao" @click="dropJ(item,foods)"></i>
                       <span style="color:#888">{{item.count?item.count:''}}</span>
                     </span>
-                  </el-collapse-transition> 
+                  </el-collapse-transition>
                   <i class="el-icon-circle-plus fuhao" @click="drop($event,item,foods)"></i>
                 </span>
               </div>
@@ -33,17 +33,17 @@
         <el-col :span="18">
           <div style="padding:13px 5px 14px 20px" class="right-content">
             <span class="title">{{item.name}}</span>
-            <span class="hot">招牌</span>
+            <span class="hot">大人気</span>
             <p class="intro">{{item.content}}</p>
             <div>
-              <span class="intro">月销{{item.sales}}笔</span>
-              <span class="send">{{item.start_num}}份起送</span>
+              <!--<span class="intro">月销{{item.sales}}笔</span>-->
+              <!--<span class="send">{{item.start_num}}份起送</span>-->
             </div>
             <div class="vip">
               <span class="vip-left">
-                <img src="../assets/img/huang.png" alt />专享
+                <img src="../assets/img/huang.png" alt />WEB注文限定
               </span>
-              <span class="vip-price">会员价:￥{{item.vip_money}}</span>
+              <span class="vip-price">￥{{item.vip_money}}</span>
               <div class="price">
                 <span>￥{{item.money}}</span>
                 <span class="ding">
@@ -96,7 +96,7 @@ export default {
         id.count++;
         this.$set(id, "count", id.count);
       }
-      this.$emit("drop", id, this.names, event);   
+      this.$emit("drop", id, this.names, event);
     },
     //在页面减少产品数量
     dropJ(id, foods) {
@@ -105,7 +105,7 @@ export default {
         id.count = 0;
       }
       this.$emit("dropj", id, this.names);
-  
+
      }
   }
 };
