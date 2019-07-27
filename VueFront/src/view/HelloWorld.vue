@@ -2,7 +2,7 @@
   <div class="hello">
     <img src="../assets/img/bg.jpg" alt="">
     <div class="btn_img" @click="next">
-      跳过{{count}}s
+      {{count}}　秒後スキップ
     </div>
   </div>
 </template>
@@ -44,10 +44,10 @@
         }
       },
       next() {
-        this.$router.push({
-          name: 'Home',
-          path: '/Home',
-        });
+        // this.$router.push({
+        //   name: 'Home',
+        //   path: '/Home',
+        // });
       }
     },
   }
@@ -71,7 +71,7 @@
     position: absolute;
     top: 0.4rem;
     right: 0.4rem;
-    width: 1rem;
+    width: 2.5rem;
     height: 0.4rem;
     background: rgba(225,225,225,0.3);
     border-radius: 10px;

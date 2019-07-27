@@ -1,4 +1,3 @@
 export default {
-    baseUrl:'http://www.shibaorder.com'
+    baseUrl:'http://www.shibaordertest.com'
 }
- 

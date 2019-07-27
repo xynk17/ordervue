@@ -18,7 +18,7 @@
           <div class="sub_change">
             <div class="sub_box" id="box">
               <el-radio-group v-model="remarks[index].change1" @change="chang(index)">
-                <el-radio-button label="1">コールド</el-radio-button>
+                <el-radio-button label="1">アイス</el-radio-button>
                 <el-radio-button label="2">ホット</el-radio-button>
               </el-radio-group>
             </div>
