@@ -373,7 +373,7 @@ export default {
   position: absolute;
   left: 2.1rem;
   width: 5.3rem;
-  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
   font-size: 0.29rem;
   font-weight: 400;
 }
