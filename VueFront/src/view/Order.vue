@@ -358,7 +358,6 @@ export default {
 .tabss .tab-tilte {
   position: fixed;
   left: 0;
-
 }
 .tab-tilte li {
   width: 1.7rem;
@@ -366,7 +365,7 @@ export default {
   text-align: right;
   margin: 5px 10px 5px 0;
   line-height: 40px;
-  font-size: 0.29rem;
+  font-size: 0.24rem;
   font-weight: 400;
 }
 .tabss .tab-content {

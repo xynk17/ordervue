@@ -3,7 +3,7 @@
 
     <div class="sno_list" @click="details(itme)" v-for="(itme,index) in foodOrder" :key='index'>
       <div class="sno_list_tit">
-        <span>订单号：{{itme.order.order_num}}</span>
+        <span>注文番号：{{itme.order.order_num}}</span>
       </div>
       <div class="sno_list_con">
         <div class="sno_img">
