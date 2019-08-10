@@ -245,7 +245,14 @@
         console.log(this.totalPrice)
         if (this.totalPrice == '0') {
           // mint UI
-          MessageBox("INFO", "お好きな商品を選択してください");
+          // MessageBox("INFO", "お好きな商品を選択してください");
+		  MessageBox.confirm('', {
+          message: 'お好きな商品を選択してください',
+          title: 'INFO',
+          showConfirmButton:true,
+          showCancelButton:false,
+          confirmButtonText:'確定'
+        })
           return;
         }
         this.$router.push({

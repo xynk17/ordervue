@@ -91,6 +91,7 @@
 			   	})
 				.then(res =>{
           this.OrderSeeNoList=res.data
+            console.log(this.OrderSeeNoList,22)
 				})
       },
       //待收货
@@ -116,6 +117,7 @@
 			   	})
 				.then(res =>{
           this.OrderSeeOverList=res.data
+          console.log(this.OrderSeeOverList,22)
 				})
       },
     }

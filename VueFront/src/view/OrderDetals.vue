@@ -32,6 +32,10 @@
       <div>
         <div class='shiji1'>
           <p style='color:#000;font-size: 0.3rem'>注文詳細</p>
+          <p style="font-weight:700;font-size:0.5rem">
+            <span>番号</span>
+            <span class='orderId'>{{id}}</span>
+          </p>
           <p>
             <span>注文番号</span>
             <span class='orderId'>{{order.order_num}}</span>
@@ -41,7 +45,8 @@
             <span class='orderId'>{{order.time}}</span>
           </p>
           <p>
-            <el-input type="textarea" :rows="4" placeholder="备注" :disabled="true" autosize disabled id="textarea" v-model="order.note">
+            <el-input type="textarea" :rows="4" placeholder="备注" :disabled="true" autosize disabled id="textarea"
+              v-model="order.note">
             </el-input>
           </p>
         </div>
@@ -56,6 +61,7 @@
     name: 'OrderSub',
     data() {
       return {
+        id:this.$route.query.id,
         show: false,
         foodList: [], //后台返回的数据
         glole: '',
@@ -225,7 +231,10 @@
     width: 100%;
     z-index: 999;
   }
-  #textarea{
+
+  #textarea {
     color: #333333;
+    opacity: 1;
+    -webkit-text-fill-color: #333333;
   }
 </style>
