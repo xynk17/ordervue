@@ -16,37 +16,37 @@
             <span>￥{{item.money}}</span>
           </div>
           <div class="sub_change">
-            <div class="sub_box" id="box">
-              <el-radio-group v-model="remarks[index].change1" @change="chang(index)">
-                <el-radio-button label="1">アイス</el-radio-button>
-                <el-radio-button label="2">ホット</el-radio-button>
-              </el-radio-group>
-            </div>
-            <div class="sub_box">
-              <el-checkbox-group v-model="remarks[index].change2" @change="chang(index)">
-                <el-checkbox-button label="珍珠追加">タピオカ追加</el-checkbox-button>
-              </el-checkbox-group>
-            </div>
-            <div class="sub_box" v-show="show&&glole==index" @change="chang(index)">
-              <span class="sub_change_title">氷</span>
-              <el-radio-group v-model="remarks[index].change3">
-                <el-radio-button label="1">1</el-radio-button>
-                <el-radio-button label="2">2</el-radio-button>
-                <el-radio-button label="3">3</el-radio-button>
-                <el-radio-button label="4">4</el-radio-button>
-                <el-radio-button label="5">5</el-radio-button>
-              </el-radio-group>
-            </div>
-            <div class="sub_box" v-show="show&&glole==index" @change="chang(index)">
-              <span class="sub_change_title">甘さ</span>
-              <el-radio-group v-model="remarks[index].change4">
-                <el-radio-button label="1">1</el-radio-button>
-                <el-radio-button label="2">2</el-radio-button>
-                <el-radio-button label="3">3</el-radio-button>
-                <el-radio-button label="4">4</el-radio-button>
-                <el-radio-button label="5">5</el-radio-button>
-              </el-radio-group>
-            </div>
+            <!--<div class="sub_box" id="box">-->
+              <!--<el-radio-group v-model="remarks[index].change1" @change="chang(index)">-->
+                <!--<el-radio-button label="1">アイス</el-radio-button>-->
+                <!--<el-radio-button label="2">ホット</el-radio-button>-->
+              <!--</el-radio-group>-->
+            <!--</div>-->
+            <!--<div class="sub_box">-->
+              <!--<el-checkbox-group v-model="remarks[index].change2" @change="chang(index)">-->
+                <!--<el-checkbox-button label="珍珠追加">タピオカ追加</el-checkbox-button>-->
+              <!--</el-checkbox-group>-->
+            <!--</div>-->
+            <!--<div class="sub_box" v-show="show&&glole==index" @change="chang(index)">-->
+              <!--<span class="sub_change_title">氷</span>-->
+              <!--<el-radio-group v-model="remarks[index].change3">-->
+                <!--<el-radio-button label="1">1</el-radio-button>-->
+                <!--<el-radio-button label="2">2</el-radio-button>-->
+                <!--<el-radio-button label="3">3</el-radio-button>-->
+                <!--<el-radio-button label="4">4</el-radio-button>-->
+                <!--<el-radio-button label="5">5</el-radio-button>-->
+              <!--</el-radio-group>-->
+            <!--</div>-->
+            <!--<div class="sub_box" v-show="show&&glole==index" @change="chang(index)">-->
+              <!--<span class="sub_change_title">甘さ</span>-->
+              <!--<el-radio-group v-model="remarks[index].change4">-->
+                <!--<el-radio-button label="1">1</el-radio-button>-->
+                <!--<el-radio-button label="2">2</el-radio-button>-->
+                <!--<el-radio-button label="3">3</el-radio-button>-->
+                <!--<el-radio-button label="4">4</el-radio-button>-->
+                <!--<el-radio-button label="5">5</el-radio-button>-->
+              <!--</el-radio-group>-->
+            <!--</div>-->
           </div>
         </li>
       </ul>
@@ -58,7 +58,7 @@
         </span>
       </div>
       <div>
-        <el-input type="textarea" autosize placeholder="备注" v-model="textarea"></el-input>
+        <el-input type="textarea"  autosize placeholder="备注" v-model="textarea"></el-input>
       </div>
       <div class="footerBox">
         <span class="totalHe">
@@ -121,16 +121,12 @@
         this.str.push({
           str:
  `
-商品名：${this.foodList[i].name}；
-ホット；
-        `,
+`,
           index: i
         });
         this.textarea +=
         `
-产品名称：${this.foodList[i].name}；
-ホット；
-        `;
+`;
       }
       this.total = localStorage.getItem('total');
     },
@@ -270,6 +266,10 @@
     float: right;
     color: #333333;
     font-size: 0.29rem;
+  }
+
+  .sub_change{
+   padding-bottom: 1.5rem;
   }
 
   .sub_change .sub_box {
