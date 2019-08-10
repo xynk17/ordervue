@@ -16,37 +16,37 @@
             <span>￥{{item.money}}</span>
           </div>
           <div class="sub_change">
-            <div class="sub_box" id="box">
-              <el-radio-group v-model="remarks[index].change1" @change="chang(index)">
-                <el-radio-button label="1">アイス</el-radio-button>
-                <el-radio-button label="2">ホット</el-radio-button>
-              </el-radio-group>
-            </div>
-            <div class="sub_box">
-              <el-checkbox-group v-model="remarks[index].change2" @change="chang(index)">
-                <el-checkbox-button label="珍珠追加">タピオカ追加</el-checkbox-button>
-              </el-checkbox-group>
-            </div>
-            <div class="sub_box" v-show="BuList[index]!=index" @change="chang(index)">
-              <span class="sub_change_title">氷</span>
-              <el-radio-group v-model="remarks[index].change3">
-                <el-radio-button label="1">1</el-radio-button>
-                <el-radio-button label="2">2</el-radio-button>
-                <el-radio-button label="3">3</el-radio-button>
-                <el-radio-button label="4">4</el-radio-button>
-                <el-radio-button label="5">5</el-radio-button>
-              </el-radio-group>
-            </div>
-            <div class="sub_box" v-show="BuList[index]!=index" @change="chang(index)">
-              <span class="sub_change_title">甘さ</span>
-              <el-radio-group v-model="remarks[index].change4">
-                <el-radio-button label="1">1</el-radio-button>
-                <el-radio-button label="2">2</el-radio-button>
-                <el-radio-button label="3">3</el-radio-button>
-                <el-radio-button label="4">4</el-radio-button>
-                <el-radio-button label="5">5</el-radio-button>
-              </el-radio-group>
-            </div>
+            <!--<div class="sub_box" id="box">-->
+              <!--<el-radio-group v-model="remarks[index].change1" @change="chang(index)">-->
+                <!--<el-radio-button label="1">アイス</el-radio-button>-->
+                <!--<el-radio-button label="2">ホット</el-radio-button>-->
+              <!--</el-radio-group>-->
+            <!--</div>-->
+            <!--<div class="sub_box">-->
+              <!--<el-checkbox-group v-model="remarks[index].change2" @change="chang(index)">-->
+                <!--<el-checkbox-button label="珍珠追加">タピオカ追加</el-checkbox-button>-->
+              <!--</el-checkbox-group>-->
+            <!--</div>-->
+            <!--<div class="sub_box" v-show="BuList[index]!=index" @change="chang(index)">-->
+              <!--<span class="sub_change_title">氷</span>-->
+              <!--<el-radio-group v-model="remarks[index].change3">-->
+                <!--<el-radio-button label="1">1</el-radio-button>-->
+                <!--<el-radio-button label="2">2</el-radio-button>-->
+                <!--<el-radio-button label="3">3</el-radio-button>-->
+                <!--<el-radio-button label="4">4</el-radio-button>-->
+                <!--<el-radio-button label="5">5</el-radio-button>-->
+              <!--</el-radio-group>-->
+            <!--</div>-->
+            <!--<div class="sub_box" v-show="BuList[index]!=index" @change="chang(index)">-->
+              <!--<span class="sub_change_title">甘さ</span>-->
+              <!--<el-radio-group v-model="remarks[index].change4">-->
+                <!--<el-radio-button label="1">1</el-radio-button>-->
+                <!--<el-radio-button label="2">2</el-radio-button>-->
+                <!--<el-radio-button label="3">3</el-radio-button>-->
+                <!--<el-radio-button label="4">4</el-radio-button>-->
+                <!--<el-radio-button label="5">5</el-radio-button>-->
+              <!--</el-radio-group>-->
+            <!--</div>-->
           </div>
         </li>
       </ul>
@@ -95,9 +95,9 @@
     },
     mounted() {
      this.foodList=JSON.parse(localStorage.getItem('list'))
-      var fooListNow=[...this.foodList] 
+      var fooListNow=[...this.foodList]
       for (var i in  fooListNow) {
-          this.BuList.push(i) 
+          this.BuList.push(i)
         if (fooListNow[i].count > 1) {
            for (var j = 1;j < fooListNow[i].count; j++) {
              for(var k in this.foodList){
@@ -120,20 +120,11 @@
         });
         this.str.push({
           str:
- `
-NO.${i+1}
-商品名：${this.foodList[i].name}；
-ホット；
-タピオカ追加：${this.remarks[i].change2 ? "是" : "否"}；`,
+ ``,
           index: i
         });
         this.textarea +=
-        `
-NO.${i+1}
-产品名称：${this.foodList[i].name}；
-ホット；
-タピオカ追加：${this.remarks[i].change2 ? "是" : "否"}；
-----------------------------`;
+        ``;
       }
       this.total = localStorage.getItem('total');
     },
@@ -274,6 +265,10 @@ NO.${index+1}
     float: right;
     color: #333333;
     font-size: 0.29rem;
+  }
+
+  .sub_change{
+    padding-bottom: 1.5rem;
   }
 
   .sub_change .sub_box {
