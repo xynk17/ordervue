@@ -27,7 +27,7 @@
                 <el-checkbox-button label="珍珠追加">タピオカ追加</el-checkbox-button>
               </el-checkbox-group>
             </div>
-            <div class="sub_box" v-show="show&&glole==index" @change="chang(index)">
+            <div class="sub_box" v-show="BuList[index]!=index" @change="chang(index)">
               <span class="sub_change_title">氷</span>
               <el-radio-group v-model="remarks[index].change3">
                 <el-radio-button label="1">1</el-radio-button>
@@ -37,7 +37,7 @@
                 <el-radio-button label="5">5</el-radio-button>
               </el-radio-group>
             </div>
-            <div class="sub_box" v-show="show&&glole==index" @change="chang(index)">
+            <div class="sub_box" v-show="BuList[index]!=index" @change="chang(index)">
               <span class="sub_change_title">甘さ</span>
               <el-radio-group v-model="remarks[index].change4">
                 <el-radio-button label="1">1</el-radio-button>
@@ -82,7 +82,6 @@
       return {
         now: "",
         add: false,
-        show: false,
         foodList:[],
         total: 0,
         glole: "",
@@ -91,12 +90,14 @@
         productionName: "",
         beizhu: "",
         str: [],
+        BuList:[],
       };
     },
     mounted() {
      this.foodList=JSON.parse(localStorage.getItem('list'))
-      var fooListNow=[...this.foodList]
+      var fooListNow=[...this.foodList] 
       for (var i in  fooListNow) {
+          this.BuList.push(i) 
         if (fooListNow[i].count > 1) {
            for (var j = 1;j < fooListNow[i].count; j++) {
              for(var k in this.foodList){
@@ -109,7 +110,6 @@
           }
         }
       }
-      console.log(this.foodList,44)
       //根据传过来的foodList的长度，push chang变量的个数
       for (var i = 0; i < this.foodList.length; i++) {
         this.remarks.push({
@@ -121,16 +121,19 @@
         this.str.push({
           str:
  `
+NO.${i+1}
 商品名：${this.foodList[i].name}；
 ホット；
-        `,
+タピオカ追加：${this.remarks[i].change2 ? "是" : "否"}；`,
           index: i
         });
         this.textarea +=
         `
+NO.${i+1}
 产品名称：${this.foodList[i].name}；
 ホット；
-        `;
+タピオカ追加：${this.remarks[i].change2 ? "是" : "否"}；
+----------------------------`;
       }
       this.total = localStorage.getItem('total');
     },
@@ -183,26 +186,26 @@
       },
       //选择备注是的设置
       chang(index) {
-        this.glole = index;
         if (this.remarks[index].change1 == "1") {
-          this.show = true;
+          this.BuList[index]='gg'
         } else {
-          this.show = false;
+
+          this.BuList[index]=index
         }
         this.beizhu =
           this.remarks[index].change1 == "2" ?
         `
+NO.${index+1}
 商品名：${this.foodList[index].name}；
 ホット；
-タピオカ追加：${this.remarks[index].change2 ? "是" : "否"}；
-        `:
+タピオカ追加：${this.remarks[index].change2 ? "是" : "否"}；`:
         `
+NO.${index+1}
 商品名：${this.foodList[index].name}；
 アイス；
 タピオカ追加：${this.remarks[index].change2 ? "是" : "否"}；
 氷：${this.remarks[index].change3}；
-甘さ：${this.remarks[index].change4}
-        `;
+甘さ：${this.remarks[index].change4}；`;
         this.textarea = "";
         for (var i = 0; i < this.str.length; i++) {
           if (this.str[i].index == index) {
@@ -219,7 +222,8 @@
           this.str[this.now].str = this.beizhu;
         }
         for (var j = 0; j < this.str.length; j++) {
-          this.textarea += this.str[j].str;
+          this.textarea += this.str[j].str+`
+---------------------------`;
         }
         this.add = false;
         this.productionName = this.foodList[index].title;

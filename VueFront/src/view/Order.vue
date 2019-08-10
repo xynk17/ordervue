@@ -131,14 +131,14 @@ export default {
      },
     //根据返回的name判断是哪个模块（热销等）
     judgement(name) {
-      if(name=='热销'){
+      if(name=='人気商品'){
        return this.foodsListHot
-      }else{
-        this.foodsList.forEach((item,index)=>{
-          if(name==item.type_name){
-             return this.foodsList[index]
+      }else{ 
+         for(var i=0;i<this.foodsList.length;i++){
+               if(name==this.foodsList[i].type_name){
+             return this.foodsList[i]
           }
-        })
+         }   
       }
     },
     handleScroll() {
@@ -173,21 +173,29 @@ export default {
     //同步页面商品数量同步
     change(food) {
       this.foods.forEach((item, index) => {
-        if (item.name == food.name) {
+        if (item.id == food.id) {
           item.count = food.count;
         }
       });
     },
     //增加产品数量
     drop(target, name, event) {
-      console.log(target)
       //判断是哪个tab需改对应tab的数据，来更新页面产品数量
       if(this.judgement(name)){
-         this.judgement(name).forEach((item, index) => {
-        if (item.name == target.name) {
+        if(name=='人気商品'){
+           this.judgement(name).forEach((item, index) => {
+        if (item.id == target.id) {
           item.count = target.count;
         }
-      });
+      }); 
+        }else{
+          this.judgement(name).good.forEach((item, index) => {
+        if (item.id == target.id) {
+          item.count = target.count;
+        }
+      });   
+         
+      }
       }
       //同步购物车的产品数量
       let folge = false;
@@ -195,7 +203,7 @@ export default {
        this.x = event.clientX;
        this.y = event.clientY;
       this.foods.forEach((item, index) => {
-        if (item.name == target.name) {
+        if (item.id == target.id) {
           folge = true;
           idx = index;
         }
@@ -216,17 +224,26 @@ export default {
     },
     //减少产品数量
     dropj(target, name) {
-      if( this.judgement(name)){
-          this.judgement(name).forEach((item, index) => {
-        if (item.name == target.name) {
+      if(this.judgement(name)){
+        if(name=='人気商品'){
+           this.judgement(name).forEach((item, index) => {
+        if (item.id == target.id) {
           item.count = target.count;
         }
-      });
+      }); 
+        }else{
+          this.judgement(name).good.forEach((item, index) => {
+        if (item.id == target.id) {
+          item.count = target.count;
+        }
+      });   
+         
+      }
       }
       let folge = false;
       let idx = -1;
       this.foods.forEach((item, index) => {
-        if (item.name == target.name) {
+        if (item.id == target.id) {
           folge = true;
           idx = index;
         }

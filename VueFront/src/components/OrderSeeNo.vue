@@ -2,6 +2,9 @@
   <div class="see_no">
 
     <div class="sno_list" @click="details(itme)" v-for="(itme,index) in foodOrder" :key='index'>
+       <div class="sno_list_tit">
+        <span style='font-weight:700;font-size:0.5rem'>番号：{{itme.order.id}}</span>
+      </div>
       <div class="sno_list_tit">
         <span>注文番号：{{itme.order.order_num}}</span>
       </div>
