@@ -5,10 +5,10 @@
       </mt-header>
     </div>
     <div class="order_see_tit">
-      <mt-navbar v-model="orderSelected">
-        <mt-tab-item id="1">未支払</mt-tab-item>
-        <mt-tab-item id="2">支払済</mt-tab-item>
-      </mt-navbar>
+      <!--<mt-navbar v-model="orderSelected">-->
+        <!--&lt;!&ndash;<mt-tab-item id="1">未支払</mt-tab-item>&ndash;&gt;-->
+        <!--&lt;!&ndash;<mt-tab-item id="2">支払済</mt-tab-item>&ndash;&gt;-->
+      <!--</mt-navbar>-->
       <div class="swriper">
         <mt-swipe :auto="4000">
          <mt-swipe-item v-for='(item,index) in imgList' :key='index'>
@@ -142,7 +142,7 @@
   .ordersee .swriper {
     height: 3.5rem;
     width: 100%;
-    margin-top: 1.8rem
+    margin-top: 1rem
   }
 
   .ordersee .swriper img {

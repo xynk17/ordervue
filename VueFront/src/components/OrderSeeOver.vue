@@ -14,7 +14,7 @@
         </div>
         <div class="sno_list_title">
           <div class="title_name">
-           {{itme.order.store_name}}
+            {{itme.order.store_name}}
           </div>
           <div class="title_time">
             {{itme.order.time}}
@@ -41,22 +41,48 @@
 
       }
     },
-    props:{
-      foodOrder:{
-        type:Array,
+    props: {
+      foodOrder: {
+        type: Array,
       }
     },
-    mounted(){
+    mounted() {
       console.log(this.foodOrder)
     },
     methods: {
-     details(itme){
-        this.$router.push({
-          name: 'OrderDetals',
-          query:{
-            id:itme.order.id
-          }
-        })
+      details(itme) {
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading...',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        this.$axios({
+            url: Url.Url + '/orderapi/',
+            method: 'get',
+            params: {
+              service: 'OrderDetial.index',
+              store_id: sessionStorage.getItem('store_id'),
+               order_id: itme.order.id
+              //order_id: 21
+            }
+          })
+          .then(res => {
+            // this.foodList = res.data.good
+            // this.order = res.data.order
+            console.log(res)
+            this.$router.push({
+              name: 'OrderDetals',
+              query: {
+                res: res
+              }
+            })
+            loading.close()
+          })
+          .catch(error => {
+            console.log(error);
+            loading.close();
+          })
       }
     }
   }
@@ -117,13 +143,15 @@
     width: 0.4rem;
     height: 0.4rem;
   }
-  .sno_list_bot{
+
+  .sno_list_bot {
     border-bottom: 1px solid #EEEEEE;
     border-top: 1px solid #EEEEEE;
     padding: 0.12rem 0 0.12rem 1rem;
     font-size: 0.3rem;
   }
-  .sno_list_bot span:last-child{
+
+  .sno_list_bot span:last-child {
     float: right;
     font-weight: bold;
   }

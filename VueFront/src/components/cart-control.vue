@@ -4,12 +4,12 @@
   <div class="cart-control">
     <transition name="move">
       <div class="decrease" @click.stop.prevent="decrease($event)">
-        <i v-if="this.food.count > 0" class="el-icon-remove"></i>
+        <i v-if="this.food[keys] > 0" class="el-icon-remove"></i>
         <i v-else class="el-icon-remove-outline"></i>
       </div>
     </transition>
 
-    <div class="num">{{ this.food.count }}</div>
+    <div class="num">{{ this.food[keys] }}</div>
 
     <div class="add" @click.stop.prevent="add($event)">
       <i class="el-icon-circle-plus"></i>
@@ -31,6 +31,9 @@ export default {
     // 操作哪个商品
     food: {
       type: Object
+    },
+    keys:{
+      type:String
     }
   },
   watch: {},
@@ -40,13 +43,13 @@ export default {
       // if (!event._constructed) {
       //     return
       // }
-      if (this.food.count <= 0) {
-        this.food.count = 0;
+      if (this.food[this.keys] <= 0) {
+        this.food[this.keys] = 0;
         return;
       }
-      this.food.count--;
+      this.food[this.keys]--;
       //this.$emit("changeNum", this.food.count, this.food.name);
-      this.$emit("changeNum", this.food);
+      this.$emit("changeNum", this.food,this.keys);
     },
     add(event) {
       // 解决移动端响应两次点击事件的问题
@@ -55,10 +58,10 @@ export default {
       // }
       // 修改对象的一个不存在的属性时（this.food.count = 1），DOM 不会更新
       // 需要使用 Vue.set()
-      this.food.count++;
+      this.food[this.keys]++;
       // 将当前 dom 传递出去，用来做小球飞入效果
       //this.$emit("changeNum", this.food.count, this.food.name);
-      this.$emit("changeNum", this.food)
+      this.$emit("changeNum", this.food,this.keys)
     }
   }
 };

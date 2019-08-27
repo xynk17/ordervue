@@ -32,10 +32,10 @@
       </div>
 
       <!-- 购物车列表 -->
-      <transition name="fold" v-if="selectFoods.length!=0">
+      <transition name="fold">
         <div class="shopcart-list" v-show="listShow">
           <div class="list-header">
-            <h1 class="title">
+            <h1 class="title1">
               <i class="gun"></i>
               ショッピングカート
             </h1>
@@ -46,17 +46,35 @@
 
           <div class="list-content" ref="listContentRef">
             <ul>
-              <li class="food" v-for="(food,index) in selectFoodsList" :key="index" v-if="food.count>0">
-                <div>
-                  <span class="name">{{ food.name }}</span>
+              <div  v-for="(food,index) in selectFoodsList" :key="index">
+                <li class="food"  v-if='food.counts>0'>
+                  <span class="name">{{ food.name }}S杯</span>
                   <div class="price">
-                    <span>￥{{ food.money * food.count }}</span>
+                    <span>￥{{ food.money * food.counts }}</span>
                   </div>
                   <div class="control">
-                    <cart-control :food="food" @changeNum="changeNum"></cart-control>
+                    <cart-control :food="food" keys='counts' @changeNum="changeNum"></cart-control>
                   </div>
+                </li>
+                <li class="food" v-if='food.countm>0'>
+                  <span class="name">{{ food.name }}M杯</span>
+                  <div class="price">
+                    <span>￥{{ food.money2 * food.countm }}</span>
+                  </div>
+                  <div class="control">
+                    <cart-control :food="food" keys='countm'  @changeNum="changeNum"></cart-control>
                 </div>
-              </li>
+                </li>
+                <li class="food" v-if='food.countl>0'>
+                  <span class="name">{{ food.name }}L杯</span>
+                  <div class="price">
+                    <span>￥{{ food.dn_money * food.countl }}</span>
+                  </div>
+                  <div class="control">
+                    <cart-control :food="food" keys='countl'  @changeNum="changeNum"></cart-control>
+                  </div>
+                </li>
+              </div>
             </ul>
           </div>
         </div>
@@ -152,6 +170,14 @@
         if (this.scroll) {
           this.scroll.refresh();
         }
+      },
+      selectFoods: {
+         handler(val){
+            this.selectFoodsList=this.selectFoods
+            console.log(this.selectFoodsList)
+         },
+         immediate: true,
+         deep: true
       }
     },
     methods: {
@@ -159,11 +185,11 @@
       changeNum(num, name) {
         //赋值给this.selectFoodsList
         for (var i = 0; i < this.selectFoodsList.length; i++) {
-          if (this.selectFoodsList[i].name == name) {
-            this.selectFoodsList[i].count = num;
+          if (this.selectFoodsList[i].id == num.id) {
+            this.selectFoodsList[i][name] = num[name];
           }
         }
-        this.$emit("change", num, name);
+        this.$emit("change", num);
       },
       // 点击 + 派发的事件
       // 取一个未下落的小球执行接下来的下落动作
@@ -265,7 +291,9 @@
       empty() {
         Array.isArray(this.selectFoods) &&
           this.selectFoods.forEach(food => {
-            food.count = 0;
+            food.counts = 0;
+            food.countm = 0;
+            food.countl = 0;
           });
 
         this.listShow = false;
@@ -281,7 +309,10 @@
         let total = 0;
         Array.isArray(this.selectFoodsList) &&
           this.selectFoodsList.forEach(food => {
-            total += food.money * food.count;
+            let a=food.counts?food.counts:0
+            let b=food.countm?food.countm:0
+            let c=food.countl?food.countl:0
+            total += food.money * a+food.money2*b+food.dn_money*c;
           });
         return total;
       },
@@ -290,7 +321,10 @@
         let total = 0;
         Array.isArray(this.selectFoodsList) &&
           this.selectFoodsList.forEach(food => {
-            total += food.count;
+            let a=food.counts?food.counts:0
+            let b=food.countm?food.countm:0
+            let c=food.countl?food.countl:0
+            total += a+b+c;
           });
         return total;
       },
@@ -307,6 +341,8 @@
     },
     mounted() {
       this.selectFoodsList = this.selectFoods;
+      console.log(this.selectFoodsList,'car')
+      console.log("total",this.totalCount)
     },
     destroyed() {}
   };
@@ -475,7 +511,7 @@
           background-color: #ececff;
           //border-bottom: 1px solid rgba(7, 17, 27, 0.1);
 
-          .title {
+          .title1 {
             float: left;
             font-size: 0.25rem;
             position: relative;

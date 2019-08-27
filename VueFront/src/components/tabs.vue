@@ -8,19 +8,54 @@
         <el-col :span="18">
           <div style="padding: 14px 10px 14px 30px;" class="right-content">
             <span class="title">{{item.name}}</span>
-            <!--<p class="intro">月销{{item.sales}}笔</p>-->
             <div class="vip">
-              <div class="price">
-                <span>￥{{item.money}}</span>
-                <span class="ding">
-                  <el-collapse-transition name=".el-zoom-in-center">
-                    <span class="priceBox" v-show="item.count>0">
-                      <i class="el-icon-remove-outline fuhao" @click="dropJ(item,foods)"></i>
-                      <span style="color:#888">{{item.count?item.count:''}}</span>
-                    </span>
-                  </el-collapse-transition>
-                  <i class="el-icon-circle-plus fuhao" @click="drop($event,item,foods)"></i>
-                </span>
+              <div v-if="item.money">
+                <b style="font-size:0.3rem;color:black;">S</b>
+                <span style="font-size:0.2rem;color:black">号杯</span>
+                <b style="font-size:0.2rem;color:red">￥{{item.money}}</b>
+                <p class="price">
+                  <span class="ding">
+                    <el-collapse-transition name=".el-zoom-in-center">
+                      <span class="priceBox" v-show="item.counts>0">
+                        <i class="el-icon-remove-outline fuhao" @click="dropJ(item,foods,'s')"></i>
+                        <span style="color:#888">{{item.counts?item.counts:''}}</span>
+                      </span>
+                    </el-collapse-transition>
+                    <i class="el-icon-circle-plus fuhao" @click="drop($event,item,foods,'s')"></i>
+                  </span>
+                </p>
+              </div>
+              <div v-if="item.money2">
+                <b style="font-size:0.3rem;color:black">M</b>
+                <span style="font-size:0.2rem;color:black">号杯</span>
+                <b style="font-size:0.2rem;color:red">￥{{item.money2}}</b>
+                <p class="price">
+                  <span class="ding">
+                    <el-collapse-transition name=".el-zoom-in-center">
+                      <span class="priceBox" v-show="item.countm>0">
+                        <i class="el-icon-remove-outline fuhao" @click="dropJ(item,foods,'m')"></i>
+                        <span style="color:#888">{{item.countm?item.countm:''}}</span>
+                      </span>
+                    </el-collapse-transition>
+                    <i class="el-icon-circle-plus fuhao" @click="drop($event,item,foods,'m')"></i>
+                  </span>
+                </p>
+              </div>
+              <div v-if="item.dn_money">
+                <b style="font-size:0.3rem;color:black">L</b>
+                <span style="font-size:0.2rem;color:black">号杯</span>
+                <b style="font-size:0.2rem;color:red">￥{{item.dn_money}}</b>
+                <p class="price">
+                  <span class="ding">
+                    <el-collapse-transition name=".el-zoom-in-center">
+                      <span class="priceBox" v-show="item.countl>0">
+                        <i class="el-icon-remove-outline fuhao" @click="dropJ(item,foods,'l')"></i>
+                        <span style="color:#888">{{item.countl?item.countl:''}}</span>
+                      </span>
+                    </el-collapse-transition>
+                    <i class="el-icon-circle-plus fuhao" @click="drop($event,item,foods,'l')"></i>
+                  </span>
+                </p>
               </div>
             </div>
           </div>
@@ -34,27 +69,54 @@
           <div style="padding:13px 5px 14px 20px" class="right-content">
             <span class="title">{{item.name}}</span>
             <span class="hot">大人気</span>
-            <p class="intro">{{item.content}}</p>
-            <div>
-              <!--<span class="intro">月销{{item.sales}}笔</span>-->
-              <!--<span class="send">{{item.start_num}}份起送</span>-->
-            </div>
             <div class="vip">
-              <span class="vip-left">
-                <img src="../assets/img/huang.png" alt />WEB注文限定
-              </span>
-              <span class="vip-price">￥{{item.vip_money}}</span>
-              <div class="price">
-                <span>￥{{item.money}}</span>
-                <span class="ding">
-                  <el-collapse-transition name=".el-zoom-in-center">
-                    <span class="priceBox" v-show="item.count>0">
-                      <i class="el-icon-remove-outline fuhao" @click="dropJ(item,foods)"></i>
-                      <span style="color:#888">{{item.count?item.count:''}}</span>
-                    </span>
-                  </el-collapse-transition>
-                  <i class="el-icon-circle-plus fuhao" @click="drop($event,item,foods)"></i>
-                </span>
+              <div v-if="item.money">
+                <b style="font-size:0.3rem;color:black;">S</b>
+                <span style="font-size:0.2rem;color:black">号杯</span>
+                <b style="font-size:0.2rem;color:red">￥{{item.money}}</b>
+                <p class="price">
+                  <span class="ding">
+                    <el-collapse-transition name=".el-zoom-in-center">
+                      <span class="priceBox" v-show="item.counts>0">
+                        <i class="el-icon-remove-outline fuhao" @click="dropJ(item,foods,'s')"></i>
+                        <span style="color:#888">{{item.counts?item.counts:''}}</span>
+                      </span>
+                    </el-collapse-transition>
+                    <i class="el-icon-circle-plus fuhao" @click="drop($event,item,foods,'s')"></i>
+                  </span>
+                </p>
+              </div>
+              <div v-if="item.money2">
+                <b style="font-size:0.3rem;color:black">M</b>
+                <span style="font-size:0.2rem;color:black">号杯</span>
+                <b style="font-size:0.2rem;color:red">￥{{item.money2}}</b>
+                <p class="price">
+                  <span class="ding">
+                    <el-collapse-transition name=".el-zoom-in-center">
+                      <span class="priceBox" v-show="item.countm>0">
+                        <i class="el-icon-remove-outline fuhao" @click="dropJ(item,foods,'m')"></i>
+                        <span style="color:#888">{{item.countm?item.countm:''}}</span>
+                      </span>
+                    </el-collapse-transition>
+                    <i class="el-icon-circle-plus fuhao" @click="drop($event,item,foods,'m')"></i>
+                  </span>
+                </p>
+              </div>
+              <div v-if="item.dn_money">
+                <b style="font-size:0.3rem;color:black">L</b>
+                <span style="font-size:0.2rem;color:black">号杯</span>
+                <b style="font-size:0.2rem;color:red">￥{{item.dn_money}}</b>
+                <p class="price">
+                  <span class="ding">
+                    <el-collapse-transition name=".el-zoom-in-center">
+                      <span class="priceBox" v-show="item.countl>0">
+                        <i class="el-icon-remove-outline fuhao" @click="dropJ(item,foods,'l')"></i>
+                        <span style="color:#888">{{item.countl?item.countl:''}}</span>
+                      </span>
+                    </el-collapse-transition>
+                    <i class="el-icon-circle-plus fuhao" @click="drop($event,item,foods,'l')"></i>
+                  </span>
+                </p>
               </div>
             </div>
           </div>
@@ -89,24 +151,26 @@ export default {
   },
   methods: {
     //在页面增加产品数量
-    drop(event, id, foods) {
-      if (!id.count) {
-        this.$set(id, "count", 1);
-      } else {
-        id.count++;
-        this.$set(id, "count", id.count);
+    drop(event, id, foods,size) {
+      let key=`count${size}`
+      if (!id[key]) {
+        this.$set(id, key, 1);
+      } else { 
+       id[key]++;
+        this.$set(id, key, id[key]);
       }
+      console.log(id[key])
       this.$emit("drop", id, this.names, event);
     },
     //在页面减少产品数量
-    dropJ(id, foods) {
-      id.count--;
-      if (id.count < 0) {
-        id.count = 0;
+    dropJ(id, foods,size) {
+      let key=`count${size}`
+       id[key]--;
+      if (id[key] < 0) {
+        id[key] = 0;
       }
       this.$emit("dropj", id, this.names);
-
-     }
+    }
   }
 };
 </script>

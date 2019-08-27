@@ -6,6 +6,7 @@ import Order from '@/view/Order'
 import OrderSee from '@/view/OrderSee'
 import OrderSub from '@/view/OrderSub'
 import OrderDetals from '@/view/OrderDetals'
+import Error from '@/view/Error'
 
 Vue.use(Router)
 
@@ -39,6 +40,11 @@ export default new Router({
 		  path: '/OrderDetals',
 		  name: 'OrderDetals',
 		  component: OrderDetals
-		}
+		},
+    {
+      path: '/Error',
+      name: 'Error',
+      component: Error
+    }
   ]
 })

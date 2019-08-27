@@ -24,6 +24,9 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
+  externals:{
+      'jsbarcode': 'JsBarcode',
+    },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',

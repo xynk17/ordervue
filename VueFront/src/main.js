@@ -9,6 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import url_params from './Unitls/url_params'    //获取url参数
+import JsBarcode from 'jsbarcode'
 
 Vue.use(ElementUI)
 Vue.use(MintUI)
@@ -31,6 +32,23 @@ axios.defaults.transformRequest = [function (data) {
 Vue.prototype.$url_params=url_params   //注册全局方法
 Vue.prototype.$axios = axios
 
+// http请求拦截器
+var loadinginstace;
+axios.interceptors.request.use(function(request) {
+	if (!sessionStorage.getItem('store_id')) { // 判断是否存在token，如果存在的话，则每个http header都加上token
+		// console.log('token存在')
+    	router.replace({
+    						path: '/Error',
+    						query: {
+    							redirect: router.currentRoute.fullPath
+    						} ,//登录成功后跳入浏览的当前页面
+                })
+	}
+	return request;
+	// 给视频添加评论提交之前对评论进行判断
+}, function(error) {
+	return Promise.reject(error);
+});
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

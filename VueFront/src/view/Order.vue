@@ -44,7 +44,7 @@
           </li>
         </div>
       </div>
-      <cart ref="shopcartRef" :selectFoods="foods" @change="change" :x="x" :y="y"></cart>
+      <cart ref="shopcartRef" v-if="foods" :selectFoods="foods" @change="change" :x="x" :y="y"></cart>
     </div>
   </div>
 </template>
@@ -103,6 +103,7 @@ export default {
 					}
 				})
 				.then(res =>{
+          console.log(res)
 				    this.foodsListHot=res.data
 				})
     },
@@ -126,6 +127,7 @@ export default {
 					}
 				})
 				.then(res =>{
+          console.log(res)
 				    this.foodsList=res.data
 				})
      },
@@ -133,12 +135,12 @@ export default {
     judgement(name) {
       if(name=='人気商品'){
        return this.foodsListHot
-      }else{ 
+      }else{
          for(var i=0;i<this.foodsList.length;i++){
                if(name==this.foodsList[i].type_name){
              return this.foodsList[i]
           }
-         }   
+         }
       }
     },
     handleScroll() {
@@ -174,9 +176,12 @@ export default {
     change(food) {
       this.foods.forEach((item, index) => {
         if (item.id == food.id) {
-          item.count = food.count;
+          item.counts = food.counts
+          item.countm = food.countm
+          item.countl = food.countl
         }
       });
+      console.log(this.foods,33)
     },
     //增加产品数量
     drop(target, name, event) {
@@ -185,16 +190,28 @@ export default {
         if(name=='人気商品'){
            this.judgement(name).forEach((item, index) => {
         if (item.id == target.id) {
-          item.count = target.count;
+          if(!item.counts){
+             this.$set(item, "counts", target.counts); 
+          }else if(!item.countm){
+             this.$set(item, "countm", target.countm); 
+          }else{
+             this.$set(item, "countl", target.countl); 
+          }
         }
-      }); 
+      });
         }else{
           this.judgement(name).good.forEach((item, index) => {
         if (item.id == target.id) {
-          item.count = target.count;
+         if(!item.counts){
+             this.$set(item, "counts", target.counts); 
+          }else if(!item.countm){
+             this.$set(item, "countm", target.countm); 
+          }else{
+             this.$set(item, "countl", target.countl); 
+          }
         }
-      });   
-         
+      });
+
       }
       }
       //同步购物车的产品数量
@@ -209,14 +226,21 @@ export default {
         }
       });
       if (folge && idx >= 0) {
-        if (!this.foods[idx].count && this.foods[idx]) {
-          this.$set(this.foods[idx], "count", target.count);
-        } else {
-          this.foods[idx].count = target.count;
+        if (!this.foods[idx].counts && this.foods[idx]) {
+          this.$set(this.foods[idx], "counts", target.counts);
+        } else if(!this.foods[idx].countm && this.foods[idx]) {
+          this.$set(this.foods[idx], "countm", target.countm);
+          
+        }else if(!this.foods[idx].countl && this.foods[idx]){
+           this.$set(this.foods[idx], "countl", target.countl);
+        } 
+        else{
+          this.foods[idx] = target
         }
       } else {
         this.foods.push(target);
       }
+      console.log(this.foods,77)
       //性能优化，异步异步执行下落动画
       this.$nextTick(() => {
         this.$refs.shopcartRef.drop(target);
@@ -227,17 +251,25 @@ export default {
       if(this.judgement(name)){
         if(name=='人気商品'){
            this.judgement(name).forEach((item, index) => {
-        if (item.id == target.id) {
-          item.count = target.count;
-        }
-      }); 
+          if(!item.counts){
+             this.$set(item, "counts", target.counts); 
+          }else if(!item.countm){
+             this.$set(item, "countm", target.countm); 
+          }else{
+             this.$set(item, "countl", target.countl); 
+          }
+      });
         }else{
           this.judgement(name).good.forEach((item, index) => {
-        if (item.id == target.id) {
-          item.count = target.count;
-        }
-      });   
-         
+          if(!item.counts){
+             this.$set(item, "counts", target.counts); 
+          }else if(!item.countm){
+             this.$set(item, "countm", target.countm); 
+          }else{
+             this.$set(item, "countl", target.countl); 
+          }
+      });
+
       }
       }
       let folge = false;
@@ -249,10 +281,10 @@ export default {
         }
       });
       if (folge && idx >= 0) {
-        if (target.count <= 0) {
+        if (target.counts <= 0&&target.countm <= 0&&target.countl <= 0) {
           this.foods.splice(idx, 1);
         } else {
-          this.foods[idx].count = target.count;
+          this.foods[idx] = target;
         }
       }
     }
@@ -303,18 +335,21 @@ export default {
   vertical-align: middle;
 }
 .title {
+  display: inline-block;
   font-weight: 700;
+  width: 2rem;
+  overflow: hidden;
 }
 .hot {
   float: right;
-  width: 0.8rem;
-  height: 0.3rem;
-  line-height: 0.3rem;
+  width: 1rem;
+  height: 0.25rem;
+  line-height: 0.25rem;
   border: 1px solid red;
   border-radius: 40px;
   text-align: center;
   color: red;
-  font-size: 0.1rem;
+  font-size: 0.08rem;
 }
 .intro {
   font-size: 0.15rem;

@@ -8,12 +8,12 @@
       </mt-header>
     </div>
     <div class="order_sub_list">
-      <ul class="sub_list" v-if="foodList.length!=0&&remarks.length!=0">
+      <ul class="sub_list" v-if="foodList&&foodList.length!=0&&remarks.length!=0">
         <li v-for="(item,index) in foodList" :key="index">
           <img :src="item.logo" alt />
           <div class="sub_con">
-            <span>{{item.name}}</span>
-            <span>￥{{item.money}}</span>
+            <span>{{item.name}}<b style="font-size:0.01rem;font-weight:400">{{`（${item.cut}）`}}</b></span>
+            <span>￥{{chengjiage(item)}}</span>
           </div>
           <div class="sub_change">
             <div class="sub_box" id="box">
@@ -23,28 +23,20 @@
               </el-radio-group>
             </div>
             <div class="sub_box">
-              <el-checkbox-group v-model="remarks[index].change2" @change="chang(index)">
-                <el-checkbox-button label="珍珠追加">タピオカ追加</el-checkbox-button>
-              </el-checkbox-group>
+              <el-checkbox-group  v-model="remarks[index].change2" @change="chang(index)">
+                <el-checkbox-button v-for='(item,index1) in option' :label="item.id" :key='index1'>{{item.name}}</el-checkbox-button>
+              </el-checkbox-group >
             </div>
-            <div class="sub_box" v-show="BuList[index]!=index" @change="chang(index)">
+            <div class="sub_box" v-show="remarks[index].change1=='1'" @change="chang(index)">
               <span class="sub_change_title">氷</span>
               <el-radio-group v-model="remarks[index].change3">
-                <el-radio-button label="1">1</el-radio-button>
-                <el-radio-button label="2">2</el-radio-button>
-                <el-radio-button label="3">3</el-radio-button>
-                <el-radio-button label="4">4</el-radio-button>
-                <el-radio-button label="5">5</el-radio-button>
+                    <el-radio-button v-for='(item,index2) in ice' :label="item.id" :key='index2'>{{item.name}}</el-radio-button>
               </el-radio-group>
             </div>
-            <div class="sub_box" v-show="BuList[index]!=index" @change="chang(index)">
+            <div class="sub_box" @change="chang(index)">
               <span class="sub_change_title">甘さ</span>
-              <el-radio-group v-model="remarks[index].change4">
-                <el-radio-button label="1">1</el-radio-button>
-                <el-radio-button label="2">2</el-radio-button>
-                <el-radio-button label="3">3</el-radio-button>
-                <el-radio-button label="4">4</el-radio-button>
-                <el-radio-button label="5">5</el-radio-button>
+              <el-radio-group  v-model="remarks[index].change4">
+                <el-radio-button v-for='(item,index3) in suger' :label="item.id" :key='index3'>{{item.name}}</el-radio-button>
               </el-radio-group>
             </div>
           </div>
@@ -56,9 +48,6 @@
           合計：
           <span>￥{{total}}</span>
         </span>
-      </div>
-      <div>
-        <el-input type="textarea" autosize placeholder="备注" v-model="textarea"></el-input>
       </div>
       <div class="footerBox">
         <span class="totalHe">
@@ -72,6 +61,7 @@
 </template>
 
 <script>
+  import Url from '../Unitls/ip'
   import baseUrl from "../Unitls/ip";
   import {
     formatDatemin
@@ -88,56 +78,114 @@
         textarea: "",
         remarks: [],
         productionName: "",
-        beizhu: "",
-        str: [],
-        BuList:[],
+        ice:[],
+        option:[],
+        suger:[],
+        note:[],
+        pricse:[],
+        idx:''
       };
+    },
+    created(){
+       this.getinfo()
     },
     mounted() {
      this.foodList=JSON.parse(localStorage.getItem('list'))
-      var fooListNow=[...this.foodList] 
-      for (var i in  fooListNow) {
-          this.BuList.push(i) 
-        if (fooListNow[i].count > 1) {
-           for (var j = 1;j < fooListNow[i].count; j++) {
+      var fooListNow=this.foodList&&[...this.foodList]
+      if(fooListNow){
+          for (var i in  fooListNow) {
+        if (fooListNow[i].counts > 0||fooListNow[i].countm > 0||fooListNow[i].countl > 0) {
+           let a=fooListNow[i].counts||0
+           let b=fooListNow[i].countm||0
+           let c=fooListNow[i].countl||0
+           for (var j = 1;j <= a+b+c; j++) {
              for(var k in this.foodList){
                 if(this.foodList[k].name==fooListNow[i].name){
-                   this.foodList.splice(k,0,fooListNow[i]);
+                  if(j<=a){
+                    let obj={...fooListNow[i]}
+                    this.$set(obj,'cut','S杯')
+                    this.foodList.splice(k,0,obj);
+                  }else if(j>a&&j<=a+b){
+                    let obj={...fooListNow[i]}
+                    this.$set(fooListNow[i],'cut','M杯')
+                    this.foodList.splice(k,0,obj)
+                  }else{
+                    let obj={...fooListNow[i]}
+                    this.$set(fooListNow[i],'cut','L杯')
+                    this.foodList.splice(k,0,obj)
+                  }
+                  if(!this.foodList[k]['cut']){
+                    this.foodList.splice(k,1)
+                  }
                    break
                 }
              }
 
+
           }
         }
       }
+      }
+
+
       //根据传过来的foodList的长度，push chang变量的个数
       for (var i = 0; i < this.foodList.length; i++) {
         this.remarks.push({
-          change1: "2",
-          change2: "",
+          change1: this.foodList[i]['is_hot'],
+          change2: [],
           change3: "",
           change4: ""
         });
-        this.str.push({
-          str:
- `
-NO.${i+1}
-商品名：${this.foodList[i].name}；
-ホット；
-タピオカ追加：${this.remarks[i].change2 ? "是" : "否"}；`,
-          index: i
-        });
-        this.textarea +=
-        `
-NO.${i+1}
-产品名称：${this.foodList[i].name}；
-ホット；
-タピオカ追加：${this.remarks[i].change2 ? "是" : "否"}；
-----------------------------`;
+        this.pricse.push(this.chengjiage(this.foodList[i]))
+         this.note.push({
+              "goods_id": this.foodList[i]['id'],
+              "size":"1",
+              "hot_ice": this.foodList[i]['is_hot']=='1'?"ice":"hot",
+              "ice": "",
+              "suger":"",
+              "option":[]
+
+        })
       }
       this.total = localStorage.getItem('total');
+      console.log(this.pricse,88888)
     },
     methods: {
+      chengjiage(obj){
+        switch(obj.cut){
+          case 'S杯':return obj.money;
+                break
+          case 'M杯':return obj.money2;
+                break
+          case 'L杯':return obj.dn_money;
+                break
+        }
+      },
+      chengjiageName(obj){
+        switch(obj.cut){
+          case 'S杯':return "money";
+                break
+          case 'M杯':return "money2";
+                break
+          case 'L杯':return "dn_money";
+                break
+        }
+      },
+      getinfo(){
+        this.$axios({
+          url: Url.Url + '/orderapi/',
+          method: 'get',
+          params: {
+           service: 'StoreSet.index',
+           store_id: sessionStorage.getItem('store_id'),
+          }
+        })
+        .then(res => {
+          this.ice=res.data.data.ice
+          this.option=res.data.data.option
+          this.suger=res.data.data['suger']
+        })
+      },
       //提交点单
       submit() {
         if (!localStorage.getItem("UserId")) {
@@ -165,7 +213,7 @@ NO.${i+1}
             user_id: localStorage.getItem("UserId"),
             store_id: sessionStorage.getItem('store_id'),
             money: this.total,
-            note: this.textarea,
+            note: JSON.stringify(this.note),
             type: "1",
             order_type: "1",
             pay_type: "4",
@@ -186,47 +234,33 @@ NO.${i+1}
       },
       //选择备注是的设置
       chang(index) {
-        if (this.remarks[index].change1 == "1") {
-          this.BuList[index]='gg'
-        } else {
+         if(this.idx==index){
+             this.foodList[index][`${this.chengjiageName(this.foodList[index])}`]=this.pricse[index]
+             this.idx=''
+         }
+        var mom=0
+        this.total=0
+        for(let b in this.remarks[index].change2){
+             for(let a in this.option){
+           if(this.remarks[index].change2[b]==this.option[a].id){
+               mom+=this.option[a].money*1
+           }
 
-          this.BuList[index]=index
         }
-        this.beizhu =
-          this.remarks[index].change1 == "2" ?
-        `
-NO.${index+1}
-商品名：${this.foodList[index].name}；
-ホット；
-タピオカ追加：${this.remarks[index].change2 ? "是" : "否"}；`:
-        `
-NO.${index+1}
-商品名：${this.foodList[index].name}；
-アイス；
-タピオカ追加：${this.remarks[index].change2 ? "是" : "否"}；
-氷：${this.remarks[index].change3}；
-甘さ：${this.remarks[index].change4}；`;
-        this.textarea = "";
-        for (var i = 0; i < this.str.length; i++) {
-          if (this.str[i].index == index) {
-            this.add = true;
-            this.now = i;
-          }
         }
-        if (!this.add) {
-          this.str.push({
-            str: this.beizhu,
-            index: index
-          });
-        } else {
-          this.str[this.now].str = this.beizhu;
+         this.foodList[index][`${this.chengjiageName(this.foodList[index])}`]=this.pricse[index]*1+mom
+         this.idx=index
+         this.note[index]={
+          "goods_id": this.foodList[index]['id'],
+          "size":"1",
+          "hot_ice":this.remarks[index].change1=='1'?"ice":"hot",
+          "ice": this.remarks[index].change3,
+          "suger":this.remarks[index].change4,
+          "option":this.remarks[index].change2
         }
-        for (var j = 0; j < this.str.length; j++) {
-          this.textarea += this.str[j].str+`
----------------------------`;
+        for(var i in this.foodList){
+          this.total+=this.foodList[i][`${this.chengjiageName(this.foodList[i])}`]*1
         }
-        this.add = false;
-        this.productionName = this.foodList[index].title;
       }
     }
   };

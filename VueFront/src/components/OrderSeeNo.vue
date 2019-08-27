@@ -2,11 +2,12 @@
   <div class="see_no">
 
     <div class="sno_list" @click="details(itme)" v-for="(itme,index) in foodOrder" :key='index'>
-       <div class="sno_list_tit">
-        <span style='font-weight:700;font-size:0.5rem'>番号：{{itme.order.id}}</span>
+      <div class="sno_list_tit">
+        <!--<span style='font-weight:700;font-size:0.5rem'>番号：{{itme.order.id}}</span>-->
+        <span style='font-weight:700;font-size:0.5rem'>👉注文バーコード確認</span>
       </div>
       <div class="sno_list_tit">
-        <span>注文番号：{{itme.order.order_num}}</span>
+        <span>注文番号：{{itme.order.id}}</span>
       </div>
       <div class="sno_list_con">
         <div class="sno_img">
@@ -14,7 +15,7 @@
         </div>
         <div class="sno_list_title">
           <div class="title_name">
-           {{itme.order.store_name}}
+            {{itme.order.store_name}}
           </div>
           <div class="title_time">
             {{itme.order.time}}
@@ -34,6 +35,7 @@
 </template>
 
 <script>
+  import Url from '../Unitls/ip'
   export default {
     name: 'OrderSeeNo',
     data() {
@@ -41,21 +43,48 @@
 
       }
     },
-    props:{
-      foodOrder:{
-        type:Array,
+    props: {
+      foodOrder: {
+        type: Array,
       }
     },
-    mounted(){
+    mounted() {
+
     },
     methods: {
-      details(itme){
-        this.$router.push({
-          name: 'OrderDetals',
-          query:{
-            id:itme.order.id
-          }
-        })
+      details(itme) {
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading...',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        this.$axios({
+            url: Url.Url + '/orderapi/',
+            method: 'get',
+            params: {
+              service: 'OrderDetial.index',
+              store_id: sessionStorage.getItem('store_id'),
+               order_id: itme.order.id
+              //order_id: 21
+            }
+          })
+          .then(res => {
+            // this.foodList = res.data.good
+            // this.order = res.data.order
+            console.log(res)
+            this.$router.push({
+              name: 'OrderDetals',
+              query: {
+                res: res
+              }
+            })
+            loading.close()
+          })
+          .catch(error => {
+            console.log(error);
+            loading.close();
+          })
       }
     }
   }
@@ -116,13 +145,15 @@
     width: 0.4rem;
     height: 0.4rem;
   }
-  .sno_list_bot{
+
+  .sno_list_bot {
     border-bottom: 1px solid #EEEEEE;
     border-top: 1px solid #EEEEEE;
     padding: 0.12rem 0 0.12rem 1rem;
     font-size: 0.3rem;
   }
-  .sno_list_bot span:last-child{
+
+  .sno_list_bot span:last-child {
     float: right;
     font-weight: bold;
   }
