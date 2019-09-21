@@ -7,7 +7,7 @@
         </router-link>
       </mt-header>
     </div>
-    <!-- <div style="height: .9rem;"></div> -->
+    <div style="height: .9rem;"></div>
     <div class="order_sub_code" v-for="(itme,index) in this.$route.query.res.data.data.goods">
       <div class="order_sub_code_tit">
         <img :src="itme.logo" alt="" v-if="itme.logo !==''">
@@ -17,7 +17,7 @@
       </div>
       <div class="order_barcode">
         <!-- <img id="barcode"/> -->
-        <svg class="barcode" jsbarcode-format="CODE128" :jsbarcode-value="itme.bar_code" jsbarcode-textmargin="0"
+        <svg class="barcode" jsbarcode-format="CODE128" :jsbarcode-value="itme.bar_code" :jsbarcode-height="60" jsbarcode-textmargin="0"
           jsbarcode-fontoptions="bold">
         </svg>
       </div>
@@ -100,13 +100,12 @@
 <style>
   @import '../assets/css/index.css';
   .swriper1 {
-    height: 3rem;
+    height: 3.5rem;
     margin-bottom: 1rem;
   }
 
   .swriper1 img {
     width: 100%;
-    height: 105%;
   }
   .barcode{
     width: 100%;

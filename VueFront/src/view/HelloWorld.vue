@@ -22,7 +22,6 @@
       go() {
         let store_id=this.$url_params.getUrlKey("store_id");
         sessionStorage.setItem("store_id", store_id);
-        //sessionStorage.setItem("store_id", '3');
         const TIME_COUNT = 3;
         if (!this.timer) {
           this.count = TIME_COUNT;

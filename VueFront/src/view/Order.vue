@@ -240,7 +240,6 @@ export default {
       } else {
         this.foods.push(target);
       }
-      console.log(this.foods,77)
       //性能优化，异步异步执行下落动画
       this.$nextTick(() => {
         this.$refs.shopcartRef.drop(target);
@@ -248,25 +247,18 @@ export default {
     },
     //减少产品数量
     dropj(target, name) {
+      console.log(target,'99999',name)
       if(this.judgement(name)){
         if(name=='人気商品'){
            this.judgement(name).forEach((item, index) => {
-          if(!item.counts){
-             this.$set(item, "counts", target.counts); 
-          }else if(!item.countm){
-             this.$set(item, "countm", target.countm); 
-          }else{
-             this.$set(item, "countl", target.countl); 
+          if(target.id==item.id){
+             item=target
           }
       });
         }else{
           this.judgement(name).good.forEach((item, index) => {
-          if(!item.counts){
-             this.$set(item, "counts", target.counts); 
-          }else if(!item.countm){
-             this.$set(item, "countm", target.countm); 
-          }else{
-             this.$set(item, "countl", target.countl); 
+          if(target.id==item.id){
+             item=target
           }
       });
 
@@ -281,7 +273,8 @@ export default {
         }
       });
       if (folge && idx >= 0) {
-        if (target.counts <= 0&&target.countm <= 0&&target.countl <= 0) {
+        console.log(folge,target,'js')
+        if ((target.counts <= 0||target.counts==undefined)&&(target.countm <= 0||target.countm==undefined)&&(target.countl <= 0||target.countl==undefined)) {
           this.foods.splice(idx, 1);
         } else {
           this.foods[idx] = target;

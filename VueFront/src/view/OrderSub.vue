@@ -12,22 +12,22 @@
         <li v-for="(item,index) in foodList" :key="index">
           <img :src="item.logo" alt />
           <div class="sub_con">
-            <span>{{item.name}}<b style="font-size:0.01rem;font-weight:400">{{`（${item.cut}）`}}</b></span>
+            <span style='display:inline-block;width:3rem;height: 1.5rem'>{{item.name}}<span style="font-size:0.008rem;">{{`（${item.cut}）`}}</span></span>
             <span>￥{{chengjiage(item)}}</span>
           </div>
           <div class="sub_change">
             <div class="sub_box" id="box">
               <el-radio-group v-model="remarks[index].change1" @change="chang(index)">
-                <el-radio-button label="1">アイス</el-radio-button>
-                <el-radio-button label="2">ホット</el-radio-button>
+                <el-radio-button v-if='item.is_zp=="1"' label="1">アイス</el-radio-button>
+                <el-radio-button  v-if='item.is_tj=="1"' label="2">ホット</el-radio-button>
               </el-radio-group>
             </div>
-            <div class="sub_box">
+            <div class="sub_box" style="width:4rem">
               <el-checkbox-group  v-model="remarks[index].change2" @change="chang(index)">
                 <el-checkbox-button v-for='(item,index1) in option' :label="item.id" :key='index1'>{{item.name}}</el-checkbox-button>
               </el-checkbox-group >
             </div>
-            <div class="sub_box" v-show="remarks[index].change1=='1'" @change="chang(index)">
+            <div class="sub_box" v-show="remarks[index].change1=='1'&&item.is_zp=='1'" @change="chang(index)">
               <span class="sub_change_title">氷</span>
               <el-radio-group v-model="remarks[index].change3">
                     <el-radio-button v-for='(item,index2) in ice' :label="item.id" :key='index2'>{{item.name}}</el-radio-button>
@@ -104,17 +104,17 @@
                   if(j<=a){
                     let obj={...fooListNow[i]}
                     this.$set(obj,'cut','S杯')
-                    this.foodList.splice(k,0,obj);
+                    this.foodList.splice(k+1,0,obj);
                   }else if(j>a&&j<=a+b){
                     let obj={...fooListNow[i]}
-                    this.$set(fooListNow[i],'cut','M杯')
-                    this.foodList.splice(k,0,obj)
+                    this.$set(obj,'cut','M杯')
+                    this.foodList.splice(k+1,0,obj)
                   }else{
                     let obj={...fooListNow[i]}
-                    this.$set(fooListNow[i],'cut','L杯')
-                    this.foodList.splice(k,0,obj)
+                    this.$set(obj,'cut','L杯')
+                    this.foodList.splice(k+1,0,obj)
                   }
-                  if(!this.foodList[k]['cut']){
+                  if(!this.foodList[k].hasOwnProperty('cut')){
                     this.foodList.splice(k,1)
                   }
                    break
@@ -126,23 +126,23 @@
         }
       }
       }
-
+     
 
       //根据传过来的foodList的长度，push chang变量的个数
       for (var i = 0; i < this.foodList.length; i++) {
         this.remarks.push({
-          change1: this.foodList[i]['is_hot'],
+          change1: this.foodList[i]['is_zp']=='0'&&this.foodList[i]['is_tj']=='0'?'':'1',
           change2: [],
-          change3: "",
-          change4: ""
+          change3: this.foodList[i]['is_zp']=='0'&&this.foodList[i]['is_tj']=='0'?'':"2",
+          change4: "2"
         });
         this.pricse.push(this.chengjiage(this.foodList[i]))
          this.note.push({
               "goods_id": this.foodList[i]['id'],
-              "size":"1",
-              "hot_ice": this.foodList[i]['is_hot']=='1'?"ice":"hot",
-              "ice": "",
-              "suger":"",
+              "size":this.chgngess(this.foodList[i]),
+              "hot_ice": this.remarks[i].change1=='1'?"ice":this.foodList[i]['is_zp']=='0'&&this.foodList[i]['is_tj']=='0'?'':"hot",
+              "ice":this.foodList[i]['is_zp']=='0'&&this.foodList[i]['is_tj']=='0'?'':"2",
+              "suger":"2",
               "option":[]
 
         })
@@ -151,6 +151,16 @@
       console.log(this.pricse,88888)
     },
     methods: {
+       chgngess(obj){
+          switch(obj.cut){
+          case 'S杯':return '1';
+                break
+          case 'M杯':return '2';
+                break
+          case 'L杯':return '3';
+                break
+        }
+       },
       chengjiage(obj){
         switch(obj.cut){
           case 'S杯':return obj.money;
@@ -252,9 +262,9 @@
          this.idx=index
          this.note[index]={
           "goods_id": this.foodList[index]['id'],
-          "size":"1",
-          "hot_ice":this.remarks[index].change1=='1'?"ice":"hot",
-          "ice": this.remarks[index].change3,
+          "size":this.chgngess(this.foodList[index]),
+          "hot_ice":this.remarks[index].change1=='1'?"ice":(this.foodList[index]['is_zp']=='0'&&this.foodList[index]['is_tj']=='0')?'':"hot",
+          "ice":this.remarks[index].change1=='1'?this.remarks[index].change3:'',
           "suger":this.remarks[index].change4,
           "option":this.remarks[index].change2
         }
@@ -293,7 +303,7 @@
     width: 4.4rem;
     float: right;
     height: 1rem;
-    line-height: 1rem;
+    line-height: 0.5rem;
     margin-left: 1rem;
     font-size: 0.29rem;
   }
@@ -319,7 +329,9 @@
     padding: 0.1rem 0.4rem;
     border: 1px solid #dcdfe6;
   }
-
+#box{
+  height:1.5rem
+}
   .sub_change .sub_box .el-radio-button {
     margin-right: 0.26rem;
   }

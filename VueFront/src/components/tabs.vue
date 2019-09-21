@@ -9,7 +9,7 @@
           <div style="padding: 14px 10px 14px 30px;" class="right-content">
             <span class="title">{{item.name}}</span>
             <div class="vip">
-              <div v-if="item.money">
+              <div v-if="item.money!=0">
                 <b style="font-size:0.3rem;color:black;">S</b>
                 <span style="font-size:0.2rem;color:black">号杯</span>
                 <b style="font-size:0.2rem;color:red">￥{{item.money}}</b>
@@ -25,7 +25,7 @@
                   </span>
                 </p>
               </div>
-              <div v-if="item.money2">
+              <div v-if="item.money2!=0">
                 <b style="font-size:0.3rem;color:black">M</b>
                 <span style="font-size:0.2rem;color:black">号杯</span>
                 <b style="font-size:0.2rem;color:red">￥{{item.money2}}</b>
@@ -41,7 +41,7 @@
                   </span>
                 </p>
               </div>
-              <div v-if="item.dn_money">
+              <div v-if="item.dn_money!=0">
                 <b style="font-size:0.3rem;color:black">L</b>
                 <span style="font-size:0.2rem;color:black">号杯</span>
                 <b style="font-size:0.2rem;color:red">￥{{item.dn_money}}</b>
@@ -70,7 +70,7 @@
             <span class="title">{{item.name}}</span>
             <span class="hot">大人気</span>
             <div class="vip">
-              <div v-if="item.money">
+              <div v-if="item.money!=0">
                 <b style="font-size:0.3rem;color:black;">S</b>
                 <span style="font-size:0.2rem;color:black">号杯</span>
                 <b style="font-size:0.2rem;color:red">￥{{item.money}}</b>
@@ -86,7 +86,7 @@
                   </span>
                 </p>
               </div>
-              <div v-if="item.money2">
+              <div v-if="item.money2!=0">
                 <b style="font-size:0.3rem;color:black">M</b>
                 <span style="font-size:0.2rem;color:black">号杯</span>
                 <b style="font-size:0.2rem;color:red">￥{{item.money2}}</b>
@@ -102,7 +102,7 @@
                   </span>
                 </p>
               </div>
-              <div v-if="item.dn_money">
+              <div v-if="item.dn_money!=0">
                 <b style="font-size:0.3rem;color:black">L</b>
                 <span style="font-size:0.2rem;color:black">号杯</span>
                 <b style="font-size:0.2rem;color:red">￥{{item.dn_money}}</b>
